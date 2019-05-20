@@ -1,0 +1,34 @@
+{
+  "type": "datasource",
+  "name": "Tail",
+  "id": "lapnap-tail-datasource",
+
+  "info": {
+    "description": "Tail Files",
+    "author": {
+      "name": "Lapnap Labs"
+    },
+    "keywords": ["files", "csv"],
+    "logos": {
+      "small": "img/tail.svg",
+      "large": "img/tail.svg"
+    },
+    "links": [
+      {"name": "Project site", "url": "https://github.com/ryantxu/grafana-firebase-app"},
+      {
+        "name": "MIT License",
+        "url": "https://github.com/ryantxu/grafana-firebase-app/blob/master/LICENSE"
+      }
+    ],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+
+  "includes": [],
+
+  "dependencies": {
+    "grafanaVersion": "6.3.x",
+    "plugins": []
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "exclude": ["./node_modules/*"],
+  "compilerOptions": {
+    "traceResolution": true,
+
+    "moduleResolution": "node",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+
+    "module": "esnext",
+    "outDir": "compiled",
+    "declaration": true,
+    "declarationDir": "dist",
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "typeRoots": ["./node_modules/@types", "types"],
+    "skipLibCheck": true,
+    "removeComments": false,
+
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "inlineSourceMap": false,
+    "sourceMap": true,
+    "noEmitOnError": false,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitUseStrict": false,
+    "downlevelIteration": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "grafana": ["../node_modules/grafana_master/public"],
+      "@grafana/ui": ["../node_modules/grafana_master/packages/grafana-ui/"]
+    }
+  }
+}

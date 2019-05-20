@@ -1,2 +1,3 @@
-# grafana-tail-datasource
-Tail files into grafana
+## Lapnap Tail DataSource
+
+Tail files in grafana
