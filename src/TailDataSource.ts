@@ -4,32 +4,69 @@ import {
   DataQueryResponse,
   DataSourceApi,
   DataSourceInstanceSettings,
+  DataStreamObserver,
+  SeriesData,
+  LoadingState,
 } from '@grafana/ui';
 
 import {TailQuery, TailOptions} from './types';
+import {FileWorker} from './FileWorker';
 
 export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
+  private options: TailOptions;
+
   constructor(instanceSettings: DataSourceInstanceSettings<TailOptions>) {
     super(instanceSettings);
+    this.options = instanceSettings.jsonData;
   }
 
-  /**
-   * Convert a query to a simple text string
-   */
   getQueryDisplayText(query: TailQuery) {
-    return `Get Data: ${query.path}`;
+    return `Tail: ${query.path}`;
   }
 
-  query(options: DataQueryRequest<TailQuery>): Promise<DataQueryResponse> {
-    // if (!this.settings) {
-    //   return Promise.reject('no settings');
-    // }
+  query(
+    options: DataQueryRequest<TailQuery>,
+    observer: DataStreamObserver
+  ): Promise<DataQueryResponse> {
+    const {prefix} = this.options;
 
-    // const {url, jsonData} = this.settings;
+    const workers = options.targets.map(query => {
+      const path = prefix ? prefix + query.path : query.path;
+      return new FileWorker(path!, query, options, observer);
+    });
 
-    // console.log('FETCH', options, url, jsonData);
+    return new Promise(resolve => {
+      let done = false;
+      const timeoutId = setTimeout(() => {
+        const series: SeriesData[] = [];
+        for (const worker of workers) {
+          worker.useStream = true;
+          if (worker.state.series && worker.state.state === LoadingState.Done) {
+            for (const s of worker.state.series) {
+              series.push(s);
+            }
+          }
+        }
+        if (!done) {
+          resolve({data: series});
+        }
+      }, 1000); // 1 second to finish, then start streaming
 
-    return Promise.resolve({data: []});
+      return Promise.all(workers).then(states => {
+        clearTimeout(timeoutId);
+
+        done = true;
+        const series: SeriesData[] = [];
+        for (const state of states) {
+          if (state.series) {
+            for (const s of state.series) {
+              series.push(s);
+            }
+          }
+        }
+        return {data: series};
+      });
+    });
   }
 
   testDatasource() {

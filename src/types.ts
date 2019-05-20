@@ -5,5 +5,5 @@ export interface TailQuery extends DataQuery {
 }
 
 export interface TailOptions extends DataSourceJsonData {
-  // The datasource options
+  prefix?: string;
 }

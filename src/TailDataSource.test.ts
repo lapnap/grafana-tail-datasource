@@ -1,9 +1,13 @@
 import {TailDataSource} from './TailDataSource';
 import {TailOptions} from './types';
-import {readCSV, DataSourceInstanceSettings, PluginMeta, DataQueryRequest} from '@grafana/ui';
+import {
+  DataSourceInstanceSettings,
+  PluginMeta,
+  DataQueryRequest,
+  DataStreamState,
+} from '@grafana/ui';
 
-describe('InputDatasource', () => {
-  const data = readCSV('a,b,c\n1,2,3\n4,5,6');
+describe('TailDatasource', () => {
   const instanceSettings: DataSourceInstanceSettings<TailOptions> = {
     id: 1,
     type: 'x',
@@ -20,12 +24,15 @@ describe('InputDatasource', () => {
         targets: [{refId: 'Z'}],
       } as DataQueryRequest;
 
-      return ds.query(options).then(rsp => {
+      const observer = (evt: DataStreamState) => {
+        console.log('GOT', evt);
+      };
+
+      return ds.query(options, observer).then(rsp => {
         expect(rsp.data.length).toBe(1);
 
         const series = rsp.data[0];
         expect(series.refId).toBe('Z');
-        expect(series.rows).toEqual(data[0].rows);
       });
     });
   });

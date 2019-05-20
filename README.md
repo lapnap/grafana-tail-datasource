@@ -1,3 +1,3 @@
 ## Lapnap Tail DataSource
 
-Tail files in grafana
+Tail files from grafana
