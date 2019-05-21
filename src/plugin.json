@@ -3,6 +3,8 @@
   "name": "Tail",
   "id": "lapnap-tail-datasource",
 
+  "metrics": true,
+
   "info": {
     "description": "Tail Files",
     "author": {

@@ -23,12 +23,12 @@ export class TailQueryEditor extends PureComponent<Props, State> {
     return (
       <div className="gf-form">
         <FormField
-          label="Title"
-          labelWidth={4}
+          label="Path"
+          labelWidth={6}
           onChange={this.onPathChange}
           value={query.path}
           tooltip={'The HTTP request path'}
-          placeholder="Tail file"
+          placeholder="/var/log/path.log"
         />
       </div>
     );

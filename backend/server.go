@@ -42,15 +42,23 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	query := r.URL.Query()
+	if query.Get("TEST") != "" {
+		fmt.Fprintln(w, "OK")
+		return
+	}
+
 	path := query.Get("path")
 	if path == "" {
 		http.Error(w, "Missing path parameter", http.StatusBadRequest)
 		return
 	}
 	if !strings.HasPrefix(path, "/var/log/") {
-		// TODO: obviously more configurable
-		http.Error(w, "Path must start with /var/log/: "+path, http.StatusBadRequest)
-		return
+		dir, _ := os.Getwd()
+		if !strings.HasPrefix(path, dir) {
+			// TODO: obviously more configurable
+			http.Error(w, "Path must start with /var/log/ OR "+dir, http.StatusBadRequest)
+			return
+		}
 	}
 
 	fi, err := os.Stat(path)

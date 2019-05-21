@@ -8,12 +8,12 @@ import {
 } from '@grafana/ui';
 import {TailQuery} from 'types';
 
-export class FileWorker extends Promise<DataStreamState> {
+export class FileWorker {
   controller = new AbortController();
   csv?: CSVReader;
   reader?: ReadableStreamReader<Uint8Array>;
   state: DataStreamState;
-  useStream = false; // starts as false
+  useStream = true; // starts as false
   cancel = false;
   chunkCount = 0;
   last = Date.now();
@@ -24,42 +24,6 @@ export class FileWorker extends Promise<DataStreamState> {
     request: DataQueryRequest,
     private observer: DataStreamObserver
   ) {
-    super((resolve, reject) => {
-      return fetch(
-        new Request(url, {
-          method: 'GET',
-          signal: this.controller.signal,
-        })
-      ).then(r => {
-        if (r.status !== 200) {
-          this.state.error = {
-            message: 'error loading url',
-            status: r.status + '',
-            statusText: r.statusText,
-            refId: query.refId,
-          };
-          this.state.state = LoadingState.Error;
-          if (this.useStream) {
-            this.observer(this.state);
-          }
-          reject(this.state.error);
-        } else if (r.body) {
-          this.state.state = LoadingState.Streaming;
-          this.reader = r.body.getReader();
-          return this.reader
-            .read()
-            .then(this.processChunk)
-            .then(() => {
-              resolve(this.state);
-              return this.state;
-            });
-        }
-
-        reject('Missing Body');
-        return this.state;
-      });
-    });
-
     //this.csv = new CSVReader({callback: this});
     this.state = {
       key: query.refId,
@@ -67,6 +31,43 @@ export class FileWorker extends Promise<DataStreamState> {
       request,
       unsubscribe: this.unsubscribe,
     };
+
+    console.log('FileWorker', url);
+
+    fetch(
+      new Request(url, {
+        method: 'GET',
+        signal: this.controller.signal,
+      })
+    ).then(r => {
+      if (r.status !== 200) {
+        this.state.error = {
+          message: 'error loading url',
+          status: r.status + '',
+          statusText: r.statusText,
+          refId: query.refId,
+        };
+        this.state.state = LoadingState.Error;
+        if (this.useStream) {
+          this.observer(this.state);
+        }
+      } else if (r.body) {
+        this.state.state = LoadingState.Streaming;
+        this.reader = r.body.getReader();
+        this.reader
+          .read()
+          .then(this.processChunk)
+          .then(() => {
+            return this.state;
+          });
+      } else {
+        this.state.error = {
+          message: 'Missing Response Body',
+          refId: query.refId,
+        };
+        this.state.state = LoadingState.Error;
+      }
+    });
   }
 
   unsubscribe = () => {
@@ -106,6 +107,7 @@ export class FileWorker extends Promise<DataStreamState> {
 
   onHeader = (series: SeriesData) => {
     series.refId = this.state.key;
+
     this.state.series = [series];
   };
 

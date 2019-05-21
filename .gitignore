@@ -3,3 +3,4 @@ node_modules/
 
 dist/
 
+backend/signal-test.csv
