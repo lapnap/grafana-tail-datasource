@@ -27,3 +27,9 @@ This should look the same as running:
 ```
 tail -f /Users/ryan/workspace/grafana-plugins/grafana-tail-datasource/backend/signal-test.csv
 ```
+
+To get the header comment rows add the paraeter: `&head=%23` (%23=#)
+
+```
+curl --no-buffer 'http://localhost:7777/?path=/Users/ryan/workspace/grafana-plugins/grafana-tail-datasource/backend/signal-test.csv&head=%23'
+```

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io"
 	"log"
@@ -75,6 +76,28 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if runtime.GOOS == "windows" {
 		http.Error(w, "TODO, call powershell (windows not yet supported)", http.StatusInternalServerError)
 		return
+	}
+
+	// Optionally send the first lines that start with some key
+	// Typicaly: '#' or ';'
+	head := query.Get("head")
+	if head != "" {
+		fmt.Fprintln(w, "SEND HEADER: %v", head)
+		file, err := os.Open(path)
+		defer file.Close()
+		if err != nil {
+			http.Error(w, "Error Opening File", http.StatusBadRequest)
+			return
+		}
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			line := scanner.Text()
+			if strings.HasPrefix(line, head) {
+				fmt.Fprintln(w, line)
+			} else {
+				break
+			}
+		}
 	}
 
 	fmt.Printf("[%d] Tail: %s\n", id, path)

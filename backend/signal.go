@@ -17,7 +17,7 @@ func main() {
 	ticker := time.NewTicker(time.Duration(speed) * time.Millisecond)
 
 	w := bufio.NewWriter(os.Stdout)
-	fmt.Fprintf(w, "time,value,min,max,date\n")
+	fmt.Fprintf(w, "#name#time,value,min,max,date\n")
 
 	for t := range ticker.C {
 		delta := rand.Float64() - 0.5

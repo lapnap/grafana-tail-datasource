@@ -17,7 +17,7 @@ export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
 
     this.base = instanceSettings.url + '?path=';
     if (instanceSettings.jsonData.prefix) {
-      this.base += instanceSettings.jsonData.prefix;
+      this.base += encodeURI(instanceSettings.jsonData.prefix);
     }
   }
 
@@ -35,7 +35,14 @@ export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
           reject('Missing Path');
           return;
         }
-        return new FileWorker(this.base + query.path, query, options, observer);
+        let url = this.base + encodeURI(query.path);
+        if (query.head) {
+          url += '&head=' + encodeURIComponent(query.head);
+        } else if (this.instanceSettings.jsonData.head) {
+          url += '&head=' + encodeURIComponent(this.instanceSettings.jsonData.head);
+        }
+        console.log('QUERY', url, this);
+        return new FileWorker(url, query, options, observer);
       });
       console.log('WORK:', workers);
       resolve({data: []});
@@ -77,7 +84,6 @@ export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
 
   testDatasource() {
     const url = this.instanceSettings.url;
-    console.log('XXTEST!!!!', url);
     if (!url || !url.startsWith('http')) {
       return Promise.resolve({
         status: 'error',
