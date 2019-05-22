@@ -2,5 +2,6 @@
 node_modules/
 
 dist/
+.rpt2_cache/
 
 backend/signal-test.csv
