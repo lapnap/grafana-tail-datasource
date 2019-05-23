@@ -2,9 +2,9 @@
 
 # install npm modules
 echo "Installing NPM modules with yarn"
-yarn install
-echo "Ensure Grafana source available"
+yarn install --pure-lockfile
 
+echo "Ensure Grafana source available"
 TARGETDIR='node_modules/@grafana'
 
 if [ ! -d $TARGETDIR ]; then

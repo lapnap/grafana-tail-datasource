@@ -3,5 +3,6 @@ node_modules/
 
 dist/
 .rpt2_cache/
+coverage/
 
 backend/signal-test.csv

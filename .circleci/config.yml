@@ -13,8 +13,8 @@ jobs:
           name: install yarn
           command: 'sudo npm install -g yarn --quiet'
       - run:
-          name: yarn install
-          command: 'yarn install --pure-lockfile --no-progress'
+          name: prebuild, load dependencies
+          command: 'yarn prebuild'
       - run:
           name: lint/pretty
           command: 'yarn prettier:check'
