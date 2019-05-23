@@ -22,9 +22,6 @@ jobs:
           name: test
           command: 'yarn test:badges'
       - run:
-          name: test
-          command: 'yarn build'
-      - run:
           name: zip dist
           command: 'cd dist && zip -r9 ../lapnap-tail-datasource-dev.zip *'
       - store_artifacts:
