@@ -20,12 +20,14 @@ jobs:
           command: 'yarn prettier:check'
       - run:
           name: test
-          command: 'yarn test'
+          command: 'yarn test:badges'
       - run:
           name: test
           command: 'yarn build'
       - run:
           name: zip dist
-          command: 'cd dist && zip -r9 ../lapnap-live-app-dev.zip *'
+          command: 'cd dist && zip -r9 ../lapnap-tail-datasource-dev.zip *'
       - store_artifacts:
-          path: lapnap-live-app-dev.zip
+          path: lapnap-tail-datasource-dev.zip
+      - store_artifacts:
+          path: coverage
