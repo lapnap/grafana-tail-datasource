@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8
+      - image: circleci/node:10
 
     working_directory: ~/repo
 
@@ -13,13 +13,19 @@ jobs:
           name: install yarn
           command: 'sudo npm install -g yarn --quiet'
       - run:
-          name: npm install
-          command: 'npm install --pure-lockfile --no-progress'
+          name: yarn install
+          command: 'yarn install --pure-lockfile --no-progress'
       - run:
-          name: build
+          name: lint/pretty
+          command: 'yarn prettier:check'
+      - run:
+          name: test
+          command: 'yarn test'
+      - run:
+          name: test
           command: 'yarn build'
       - run:
           name: zip dist
-          command: 'cd dist && zip -r9 ../grafana-discrete-panel-dev.zip *'
+          command: 'cd dist && zip -r9 ../lapnap-live-app-dev.zip *'
       - store_artifacts:
-          path: grafana-discrete-panel-dev.zip
+          path: lapnap-live-app-dev.zip

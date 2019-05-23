@@ -3,12 +3,12 @@
   "version": "0.0.1-dev",
   "description": "Tail Files from grafana server",
   "scripts": {
-    "prebuild": "build/prebuild.sh",
+    "prebuild": "tools/prebuild.sh",
     "build": "rollup -c rollup.config.ts --environment PRODUCTION",
     "dev": "rollup -c rollup.config.ts -w",
     "test": "jest --config jest.config.js",
-    "lint": "tslint -c tslint.json --project tsconfig.json",
-    "format": "prettier-eslint --write \"src/**/*.{ts,tsx,json,css,js,jsx}\""
+    "prettier:check": "prettier --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "prettier --list-different \"src/**/*.{ts,tsx}\" --write"
   },
   "author": "ryantxu",
   "license": "MIT",
@@ -94,6 +94,9 @@
     "react-transition-group": "2.6.1",
     "react-virtualized": "9.21.0",
     "replace-in-file": "^4.1.0",
+    "enzyme": "3.9.0",
+    "enzyme-adapter-react-16": "1.11.2",
+    "enzyme-to-json": "3.3.5",
     "rimraf": "^2.6.2",
     "rollup": "1.12.3",
     "rollup-plugin-alias": "^1.5.1",

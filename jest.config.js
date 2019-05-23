@@ -1,14 +1,13 @@
 module.exports = {
-  verbose: true,
-  globals: {
-    'ts-jest': {
-      tsConfig: 'tsconfig.jest.json',
-    },
-  },
+  verbose: false,
   transform: {
-    '\\.ts': 'ts-jest',
+    '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  testRegex: '(\\.|/)([jt]est)\\.[jt]s$',
-  moduleFileExtensions: ['ts', 'js', 'json'],
-  setupFiles: ['<rootDir>/setup_tests.ts'],
+  moduleDirectories: ['node_modules'],
+  roots: ['<rootDir>/src'],
+  testRegex: '(\\.|/)(test)\\.(jsx?|tsx?)$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  setupFiles: ['./tools/jest-shim.ts', './tools/jest-setup.ts'],
+  snapshotSerializers: ['enzyme-to-json/serializer'],
+  globals: {'ts-jest': {isolatedModules: true}},
 };

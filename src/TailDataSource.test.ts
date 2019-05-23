@@ -18,7 +18,7 @@ describe('TailDatasource', () => {
   };
 
   describe('when querying', () => {
-    test('should return the saved data with a query', () => {
+    test('should give error with no path defined', () => {
       const ds = new TailDataSource(instanceSettings);
       const options = {
         targets: [{refId: 'Z'}],
@@ -28,12 +28,15 @@ describe('TailDatasource', () => {
         console.log('GOT', evt);
       };
 
-      return ds.query(options, observer).then(rsp => {
-        expect(rsp.data.length).toBe(1);
-
-        const series = rsp.data[0];
-        expect(series.refId).toBe('Z');
-      });
+      // Missing path
+      return ds
+        .query(options, observer)
+        .then(rsp => {
+          expect(true).toBeFalsy(); // FAIL!
+        })
+        .catch(reason => {
+          expect(reason).toMatchSnapshot();
+        });
     });
   });
 });

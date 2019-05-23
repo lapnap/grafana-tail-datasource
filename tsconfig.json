@@ -7,8 +7,6 @@
     "lib": ["es6", "dom"],
 
     "module": "esnext",
-    "outDir": "compiled",
-    "declaration": true,
     "strict": true,
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -33,8 +31,6 @@
     "downlevelIteration": true,
     "noUnusedLocals": true,
     "pretty": true,
-
-    "declarationDir": "dist/types",
     "outDir": "dist/lib",
     "typeRoots": ["node_modules/@types"],
     "baseUrl": "./src"
