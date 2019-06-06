@@ -3,7 +3,6 @@
   "name": "Tail",
   "id": "lapnap-tail-datasource",
 
-  "constructable": true, // not injected?
   "metrics": true,
 
   "info": {
