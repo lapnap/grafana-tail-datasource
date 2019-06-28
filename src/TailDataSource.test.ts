@@ -35,7 +35,7 @@ describe('TailDatasource', () => {
           expect(true).toBeFalsy(); // FAIL!
         })
         .catch(reason => {
-          expect(reason).toMatchSnapshot();
+          expect(reason).toBe("Missing Path");
         });
     });
   });

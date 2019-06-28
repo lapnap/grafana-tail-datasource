@@ -18,7 +18,7 @@ export class FileWorker {
   chunkCount = 0;
   last = Date.now();
   series: SeriesData;
-  pending: string = '';
+  pending = '';
   maxRows: number;
 
   constructor(

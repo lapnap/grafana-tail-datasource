@@ -11,7 +11,7 @@ import {TailQuery, TailOptions} from './types';
 import {FileWorker} from './FileWorker';
 
 export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
-  private base: string = '';
+  private base = '';
 
   constructor(private instanceSettings: DataSourceInstanceSettings<TailOptions>) {
     super(instanceSettings);
