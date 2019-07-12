@@ -708,6 +708,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.8.2.tgz#576ff7fb1230185b619a75d258cbc98f0867a8dc"
   integrity sha512-rLu3wcBWH4P5q1CGoSSH/i9hrXs7SlbRLkoq9IGuoPYNGQvDJ3pt/wmOM+XgYjIDRMVIdkUWt0RsfzF50JfnCw==
 
+"@grafana/data@latest":
+  version "6.3.0-alpha.32"
+  resolved "https://registry.yarnpkg.com/@grafana/data/-/data-6.3.0-alpha.32.tgz#5445cbda9a3c113005378236683876377a41a50f"
+  integrity sha512-SHvtDQuJ+LorjkF3bGkTdq2mCW2OmExhMlvhQRH+6qwbodoARqD/8X3dKFLw9D+PwW0H4nFYk2LQbdZKQXZRNw==
+
 "@grafana/toolkit@next":
   version "6.4.0-alpha.12-ceaa30d88"
   resolved "https://registry.yarnpkg.com/@grafana/toolkit/-/toolkit-6.4.0-alpha.12-ceaa30d88.tgz#70e9f0fb4da8bf6d935e679dc4a9e70564b9f87b"
