@@ -1,11 +1,15 @@
 import {
   DataQueryRequest,
-  SeriesData,
   DataStreamObserver,
-  DataStreamState,
+  DataStreamState
+} from '@grafana/ui';
+
+import {
+  DataFrame,
   LoadingState,
   CSVReader,
-} from '@grafana/ui';
+} from '@grafana/data';
+
 import {TailQuery} from 'types';
 
 export class FileWorker {
@@ -17,7 +21,7 @@ export class FileWorker {
   cancel = false;
   chunkCount = 0;
   last = Date.now();
-  series: SeriesData;
+  series: DataFrame;
   pending = '';
   maxRows: number;
 
@@ -129,7 +133,7 @@ export class FileWorker {
     return this.reader!.read().then(this.processChunk);
   };
 
-  onHeader = (series: SeriesData) => {
+  onHeader = (series: DataFrame) => {
     series.refId = this.state.key;
     this.series = series;
     this.state.series = [series];
