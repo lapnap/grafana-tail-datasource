@@ -1,11 +1,11 @@
 // Libraries
-import React, {PureComponent, ChangeEvent} from 'react';
+import React, { PureComponent, ChangeEvent } from 'react';
 
 // Types
-import {TailDataSource} from './TailDataSource';
-import {TailQuery, TailOptions} from './types';
+import { TailDataSource } from './TailDataSource';
+import { TailQuery, TailOptions } from './types';
 
-import {QueryEditorProps, FormField} from '@grafana/ui';
+import { QueryEditorProps, FormField } from '@grafana/ui';
 
 type Props = QueryEditorProps<TailDataSource, TailQuery, TailOptions>;
 
@@ -13,12 +13,12 @@ interface State {}
 
 export class TailQueryEditor extends PureComponent<Props, State> {
   onPathChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {onChange, query} = this.props;
-    onChange({...query, path: event.target.value});
+    const { onChange, query } = this.props;
+    onChange({ ...query, path: event.target.value });
   };
 
   render() {
-    const {query} = this.props;
+    const { query } = this.props;
 
     return (
       <div className="gf-form">

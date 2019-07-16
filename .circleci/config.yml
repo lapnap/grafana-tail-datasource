@@ -5,26 +5,29 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:10
 
-    working_directory: ~/repo
+    working_directory: ~/plugin
 
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: install yarn
           command: 'sudo npm install -g yarn --quiet'
       - run:
-          name: prebuild, load dependencies
-          command: 'yarn prebuild'
+          name: install dependencies
+          command: 'yarn install --pure-lockfile'
       - run:
-          name: lint/pretty
-          command: 'yarn prettier:check'
+          name: Run Toolkit Build
+          command: 'npx grafana-toolkit plugin:ci-build'
       - run:
-          name: test
-          command: 'yarn test:badges'
-      - run:
-          name: zip dist
-          command: 'cd dist && zip -r9 ../lapnap-tail-datasource-dev.zip *'
+          name: Bundle Plugin
+          command: 'npx grafana-toolkit plugin:ci-bundle'
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
       - store_artifacts:
-          path: lapnap-tail-datasource-dev.zip
-      - store_artifacts:
-          path: coverage
+          path: ci/artifacts

@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`TailDatasource when querying should give error with no path defined 1`] = `"Missing Path"`;

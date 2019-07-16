@@ -1,17 +1,11 @@
 // Types
-import {
-  DataQueryRequest,
-  DataQueryResponse,
-  DataSourceApi,
-  DataSourceInstanceSettings,
-  DataStreamObserver,
-} from '@grafana/ui';
+import { DataQueryRequest, DataQueryResponse, DataSourceApi, DataSourceInstanceSettings, DataStreamObserver } from '@grafana/ui';
 
-import {TailQuery, TailOptions} from './types';
-import {FileWorker} from './FileWorker';
+import { TailQuery, TailOptions } from './types';
+import { FileWorker } from './FileWorker';
 
 export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
-  private base: string = '';
+  private base = '';
 
   constructor(private instanceSettings: DataSourceInstanceSettings<TailOptions>) {
     super(instanceSettings);
@@ -26,10 +20,7 @@ export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
     return `Tail: ${query.path}`;
   }
 
-  query(
-    options: DataQueryRequest<TailQuery>,
-    observer: DataStreamObserver
-  ): Promise<DataQueryResponse> {
+  query(options: DataQueryRequest<TailQuery>, observer: DataStreamObserver): Promise<DataQueryResponse> {
     return new Promise((resolve, reject) => {
       const workers = options.targets.map(query => {
         if (!query.path) {
@@ -46,7 +37,7 @@ export class TailDataSource extends DataSourceApi<TailQuery, TailOptions> {
         return new FileWorker(url, query, options, observer);
       });
       console.log('WORK:', workers);
-      resolve({data: []});
+      resolve({ data: [] });
     });
 
     // return new Promise(resolve => {
