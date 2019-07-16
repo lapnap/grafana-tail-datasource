@@ -1,10 +1,10 @@
 // Libraries
-import React, {PureComponent, ChangeEvent} from 'react';
+import React, { PureComponent, ChangeEvent } from 'react';
 
 // Types
-import {TailOptions} from './types';
+import { TailOptions } from './types';
 
-import {DataSourcePluginOptionsEditorProps, DataSourceSettings, FormField} from '@grafana/ui';
+import { DataSourcePluginOptionsEditorProps, DataSourceSettings, FormField } from '@grafana/ui';
 
 type TailSettings = DataSourceSettings<TailOptions>;
 
@@ -18,7 +18,7 @@ export class TailConfigEditor extends PureComponent<Props, State> {
   componentDidMount() {}
 
   onURLChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {onOptionsChange, options} = this.props;
+    const { onOptionsChange, options } = this.props;
     onOptionsChange({
       ...options,
       url: event.target.value,
@@ -27,26 +27,26 @@ export class TailConfigEditor extends PureComponent<Props, State> {
   };
 
   onPrefixChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {onOptionsChange, options} = this.props;
+    const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
       prefix: event.target.value,
     };
-    onOptionsChange({...options, jsonData});
+    onOptionsChange({ ...options, jsonData });
   };
 
   onHeadChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const {onOptionsChange, options} = this.props;
+    const { onOptionsChange, options } = this.props;
     const jsonData = {
       ...options.jsonData,
       head: event.target.value,
     };
-    onOptionsChange({...options, jsonData});
+    onOptionsChange({ ...options, jsonData });
   };
 
   render() {
-    const {options} = this.props;
-    const {jsonData} = options;
+    const { options } = this.props;
+    const { jsonData } = options;
 
     return (
       <div className="gf-form-group">

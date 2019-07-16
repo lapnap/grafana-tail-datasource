@@ -1,11 +1,6 @@
-import {TailDataSource} from './TailDataSource';
-import {TailOptions} from './types';
-import {
-  DataSourceInstanceSettings,
-  PluginMeta,
-  DataQueryRequest,
-  DataStreamState,
-} from '@grafana/ui';
+import { TailDataSource } from './TailDataSource';
+import { TailOptions } from './types';
+import { DataSourceInstanceSettings, PluginMeta, DataQueryRequest, DataStreamState } from '@grafana/ui';
 
 describe('TailDatasource', () => {
   const instanceSettings: DataSourceInstanceSettings<TailOptions> = {
@@ -21,7 +16,7 @@ describe('TailDatasource', () => {
     test('should give error with no path defined', () => {
       const ds = new TailDataSource(instanceSettings);
       const options = {
-        targets: [{refId: 'Z'}],
+        targets: [{ refId: 'Z' }],
       } as DataQueryRequest;
 
       const observer = (evt: DataStreamState) => {
@@ -35,7 +30,7 @@ describe('TailDatasource', () => {
           expect(true).toBeFalsy(); // FAIL!
         })
         .catch(reason => {
-          expect(reason).toBe("Missing Path");
+          expect(reason).toBe('Missing Path');
         });
     });
   });

@@ -1,16 +1,8 @@
-import {
-  DataQueryRequest,
-  DataStreamObserver,
-  DataStreamState
-} from '@grafana/ui';
+import { DataQueryRequest, DataStreamObserver, DataStreamState } from '@grafana/ui';
 
-import {
-  DataFrame,
-  LoadingState,
-  CSVReader,
-} from '@grafana/data';
+import { DataFrame, LoadingState, CSVReader } from '@grafana/data';
 
-import {TailQuery} from 'types';
+import { TailQuery } from 'types';
 
 export class FileWorker {
   controller = new AbortController();
@@ -25,12 +17,7 @@ export class FileWorker {
   pending = '';
   maxRows: number;
 
-  constructor(
-    url: string,
-    query: TailQuery,
-    request: DataQueryRequest,
-    private observer: DataStreamObserver
-  ) {
+  constructor(url: string, query: TailQuery, request: DataQueryRequest, private observer: DataStreamObserver) {
     //this.csv = new CSVReader({callback: this});
     this.state = {
       key: query.refId,
@@ -83,7 +70,7 @@ export class FileWorker {
   }
 
   unsubscribe = () => {
-    const {state} = this.state;
+    const { state } = this.state;
     if (state === LoadingState.Loading || LoadingState.Streaming) {
       this.controller.abort();
     }
@@ -91,7 +78,7 @@ export class FileWorker {
 
   processChunk = (value: ReadableStreamReadResult<Uint8Array>): any => {
     if (!this.csv) {
-      this.csv = new CSVReader({callback: this});
+      this.csv = new CSVReader({ callback: this });
     }
     this.chunkCount++;
     this.last = Date.now();
